@@ -1,0 +1,1 @@
+  mkbootimg --kernel zImage --ramdisk initramfs.cpio.gz --base 0x40000000 --cmdline 'selinux=1 androidboot.selinux=permissive buildvariant=eng veritykeyid=id:7e4333f9bba00adfe0ede979e28ed1920492b40f' -o new_boot.img
