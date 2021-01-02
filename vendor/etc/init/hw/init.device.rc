@@ -1,0 +1,93 @@
+on init
+    # Load persistent dm-verity state
+    verity_load_state
+
+on early-boot
+    # Update dm-verity state and set partition.*.verified properties
+    verity_update_state
+
+on verity-logging
+	exec u:r:slideshow:s0 -- /sbin/slideshow warning/verity_red_1 warning/verity_red_2
+
+on boot
+    chown system system /sys/kernel/autohotplug/enable
+    chmod 0660 /sys/kernel/autohotplug/enable
+
+    chown system system /sys/kernel/autohotplug/boost_all
+    chmod 0660 /sys/kernel/autohotplug/boost_all
+
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/boot_lock
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/boot_lock
+
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown system system /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    chmod 0660 /sys/devices/platform/soc/cpu_budget_cooling/roomage
+    write /sys/devices/platform/soc/cpu_budget_cooling/roomage "1800000 4 1800000 4 1800000 4 1800000 4"
+
+    chown system system /sys/devices/platform/gpu/scenectrl/command
+    chmod 0660 /sys/devices/platform/gpu/scenectrl/command
+
+    chown system system /sys/class/thermal/thermal_zone0/emul_temp
+    chmod 0660 /sys/class/thermal/thermal_zone0/emul_temp
+
+    write /sys/class/disp/disp/attr/runtime_enable 1
+    write /sys/kernel/autohotplug/enable 1
+    write /sys/kernel/autohotplug/boost_all 0
+
+    # Read one page at a time for swap (default is 8)
+    write /proc/sys/vm/page-cluster 0
+	
+
+#on fs
+    #insmod pvrsrvkm.ko
+#    insmod /system/vendor/modules/pvrsrvkm.ko
+
+on late-fs
+### csi module
+    #insmod /vendor/modules/videobuf2-core.ko
+    #insmod /vendor/modules/videobuf2-memops.ko
+    #insmod /vendor/modules/videobuf2-vmalloc.ko
+    #insmod /vendor/modules/videobuf2-dma-contig.ko
+    #insmod /vendor/modules/videobuf2-v4l2.ko
+    #insmod /vendor/modules/vfe_io.ko
+    #insmod /vendor/modules/tvp5150.ko
+    #insmod /vendor/modules/mipi_964.ko
+    #insmod /vendor/modules/csi_934.ko
+    #insmod /vendor/modules/vfe_v4l2.ko
+	insmod /vendor/modules/hdmi.ko
+    insmod /vendor/modules/uvcvideo.ko
+	insmod /vendor/modules/goodix_touch.ko
+	
+
+#service pvrsrvctl /vendor/bin/pvrsrvctl --start
+#    class core
+#    user root
+#    group root
+#    oneshot
+	
+service gocsdk /system/bin/gocsdk /dev/ttyS2 500000
+    class main
+    user root
+    group root
+    oneshot
+    seclabel u:r:gocsdk:s0
+
+service usbmuxd /system/bin/usbmuxd
+    class main
+    user root
+    group root
+    oneshot
+    seclabel u:r:usbmuxd:s0
+
+service insmodlate /system/bin/insmodlate.sh
+    class late_start
+    user root
+    group root system
+    oneshot
+	
+service z-link /system/bin/z-link.sh
+	class main
+	oneshot
+	seclabel u:r:shell:s0
+
