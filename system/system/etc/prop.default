@@ -1,0 +1,46 @@
+#
+# ADDITIONAL_DEFAULT_PROPERTIES
+#
+ro.actionable_compatible_property.enabled=true
+ro.secure=1
+ro.allow.mock.location=1
+ro.debuggable=1
+persist.sys.strictmode.disable=1
+ro.kernel.android.checkjni=0
+ro.sys.write_reboot_command_misc=true
+ro.sf.disablerotation=1
+tombstoned.max_tombstone_count=50
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+dalvik.vm.usejit=true
+dalvik.vm.usejitprofiles=true
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.appimageformat=lz4
+pm.dexopt.first-boot=extract
+pm.dexopt.boot=extract
+pm.dexopt.install=speed-profile
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.shared=speed
+dalvik.vm.dex2oat-minidebuginfo=true
+debug.atrace.tags.enableflags=0
+debug.hwui.renderer=opengl
+ro.lmk.downgrade_pressure=95
+ro.lmk.upgrade_pressure=50
+persist.sys.timezone=Asia/Shanghai
+persist.sys.country=US
+persist.sys.language=en
+persist.fw.force_adoptable=true
+persist.sys.bootevent=true
+persist.display.smart_backlight=1
+persist.display.enhance_mode=0
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Mon Oct 21 09:31:18 CST 2019
+ro.bootimage.build.date.utc=1571621478
+ro.bootimage.build.fingerprint=Allwinner/petrel_fvd_p1/petrel-p1:9/PPR1.181005.003/20191021-093341:eng/test-keys
+persist.sys.usb.config=mtp
